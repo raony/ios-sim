@@ -19,18 +19,10 @@ NSString *deviceIphone = @"iPhone";
 NSString *deviceIpad = @"iPad";
 NSString *deviceIpadRetina = @"iPad (Retina)";
 
-@interface iPhoneSimulator ()
-@property (nonatomic) BOOL parseTestOutput;
-@property (nonatomic) BOOL testsFailed;
-@end
-
 /**
  * A simple iPhoneSimulatorRemoteClient framework.
  */
 @implementation iPhoneSimulator
-
-@synthesize parseTestOutput = _parseTestOutput;
-@synthesize testsFailed = _testsFailed;
 
 - (void) printUsage {
   fprintf(stderr, "Usage: ios-sim <command> <options> [--args ...]\n");
@@ -89,10 +81,10 @@ NSString *deviceIpadRetina = @"iPad (Retina)";
   }
 
   if (error != nil) {
-      if (self.parseTestOutput && [error.domain isEqualToString:@"DTiPhoneSimulatorErrorDomain"] && error.code == 1) {
+      if (parseTestOutput && [error.domain isEqualToString:@"DTiPhoneSimulatorErrorDomain"] && error.code == 1) {
           // This just means that the app exited. That's normal for testing. Base our return code
           // on whether the tests passed or failed.
-          if (self.testsFailed) {
+          if (testsFailed) {
               exit(EXIT_FAILURE);
           } else {
               exit(EXIT_SUCCESS);
@@ -149,7 +141,7 @@ NSString *deviceIpadRetina = @"iPad (Retina)";
     }
   }
 
-    if (self.parseTestOutput && !self.testsFailed) { // Don't need to check for failure if we've already failed
+    if (parseTestOutput && !testsFailed) { // Don't need to check for failure if we've already failed
         // Search for test failure information
         NSString *rpTestResultsLine = @"(^Executed .*)";
         NSString *rpNoFailures = @" 0 failures";
@@ -158,7 +150,7 @@ NSString *deviceIpadRetina = @"iPad (Retina)";
         NSRegularExpression *rxTestResultsLine = [NSRegularExpression regularExpressionWithPattern:rpTestResultsLine options:NSRegularExpressionAnchorsMatchLines error:&error];
         [rxTestResultsLine enumerateMatchesInString:str options:0 range:NSMakeRange(0, [str length]) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
             if ([[str substringWithRange:[result range]] rangeOfString:rpNoFailures].location == NSNotFound) {
-                self.testsFailed = YES;
+                testsFailed = YES;
                 *stop = YES;
             }
         }];
@@ -379,7 +371,7 @@ NSString *deviceIpadRetina = @"iPad (Retina)";
       } else if (strcmp(argv[i], "--use-gdb") == 0) {
         useGDB = YES;
       } else if (strcmp(argv[i], "--unit-testing") == 0) {
-          self.parseTestOutput = YES;
+          parseTestOutput = YES;
       }
       else if (strcmp(argv[i], "--sdk") == 0) {
         i++;

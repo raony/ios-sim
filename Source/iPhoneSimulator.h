@@ -11,9 +11,6 @@
 
 @interface iPhoneSimulator : NSObject <DTiPhoneSimulatorSessionDelegate> {
 @private
-    BOOL _parseTestOutput;
-    BOOL _testsFailed;
-    
   DTiPhoneSimulatorSystemRoot *sdkRoot;
   NSFileHandle *stdoutFileHandle;
   NSFileHandle *stderrFileHandle;
@@ -25,6 +22,8 @@
   BOOL alreadyPrintedData;
   BOOL retinaDevice;
   BOOL tallDevice;
+  BOOL parseTestOutput;
+  BOOL testsFailed;
 }
 
 - (void)runWithArgc:(int)argc argv:(char **)argv;
