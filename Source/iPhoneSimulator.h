@@ -11,6 +11,9 @@
 
 @interface iPhoneSimulator : NSObject <DTiPhoneSimulatorSessionDelegate> {
 @private
+    BOOL _parseTestOutput;
+    BOOL _testsFailed;
+    
   DTiPhoneSimulatorSystemRoot *sdkRoot;
   NSFileHandle *stdoutFileHandle;
   NSFileHandle *stderrFileHandle;
