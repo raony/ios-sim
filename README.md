@@ -24,8 +24,8 @@ Through homebrew:
 
 Download an archive:
 
-    $ curl -L https://github.com/phonegap/ios-sim/zipball/1.6 -o ios-sim-1.6.zip
-    $ unzip ios-sim-1.6.zip
+    $ curl -L https://github.com/phonegap/ios-sim/zipball/1.8 -o ios-sim-1.8.zip
+    $ unzip ios-sim-1.8.zip
 
 Or from a git clone:
 
@@ -34,6 +34,18 @@ Or from a git clone:
 Then build and install from the source root:
 
     $ rake install prefix=/usr/local/
+
+tmux
+-----
+
+To get ios-sim to launch correctly within tmux use the reattach-to-user-namespace wrapper.
+
+```
+reattach-to-user-namespace ios-sim launch ./build/MyTestApp.app
+```
+*source:* https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
+
+*brew:*  ```brew install reattach-to-user-namespace```
 
 License
 -------
